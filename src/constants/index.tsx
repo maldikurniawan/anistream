@@ -1,0 +1,1 @@
+export const BASE_URL = "https://wajik-anime-api.vercel.app";
