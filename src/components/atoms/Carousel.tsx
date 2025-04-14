@@ -81,7 +81,7 @@ const Carousel: React.FC<CarouselProps> = ({
                                 {(image.title || image.description) && (
                                     <div className="absolute bottom-0 left-0 w-full z-20 p-4 md:p-10 text-white">
                                         {image.title && <h2 className="text-xl md:text-3xl font-bold bg-gradient-to-tr from-[#8C00FF] to-white text-transparent bg-clip-text line-clamp-2">{image.title}</h2>}
-                                        {image.description && <p className="text-sm line-clamp-3 md:block hidden">{image.description}</p>}
+                                        {image.description && <p className="text-sm line-clamp-3 max-[768]:hidden">{image.description}</p>}
                                     </div>
                                 )}
                             </div>
