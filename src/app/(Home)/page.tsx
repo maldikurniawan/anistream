@@ -5,7 +5,7 @@ import Recent from './Recent'
 
 const Home = () => {
   return (
-    <main>
+    <main className='overflow-x-hidden bg-black text-white'>
       <Header />
       <Banner />
       <Recent />

@@ -2,15 +2,16 @@
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { Navigation, Pagination, Autoplay, Thumbs, EffectCards } from 'swiper/modules';
-import { useState } from 'react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 interface ImageItem {
-    url: string; // Image URL
-    caption?: string; // Optional caption for captions variant
+    url: string;
+    caption?: string;
+    title?: string;
+    description?: string;
 }
 
 interface CarouselProps {
@@ -21,7 +22,12 @@ interface CarouselProps {
     loop?: boolean; // Enable or disable infinite looping
     slidesPerView?: number; // Number of slides visible at a time
     spaceBetween?: number; // Space between slides
-    variant?: 'simple' | 'caption' | 'thumbnail' | 'EffectCards';
+    breakpoints?: {
+        [width: number]: {
+            slidesPerView?: number;
+            spaceBetween?: number;
+        };
+    };
 }
 
 const Carousel: React.FC<CarouselProps> = ({
@@ -32,168 +38,57 @@ const Carousel: React.FC<CarouselProps> = ({
     loop = false,
     slidesPerView = 1,
     spaceBetween = 10,
-    variant = 'simple',
+    breakpoints = {},
 }) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
 
     return (
         <>
-            {/* Different implementations for each variant */}
-            {variant === 'simple' && (
-                <div className="relative">
-                    {/* Custom Navigation Buttons */}
-                    {navigation && (
-                        <>
-                            <button className="swiper-button-prev-custom sm:block hidden z-10 absolute top-1/2 cursor-pointer left-2 transform -translate-y-1/2 bg-black/50 text-white p-4 rounded-full shadow-lg">
-                                <FaChevronLeft className='w-6 h-6' />
-                            </button>
-                            <button className="swiper-button-next-custom sm:block hidden z-10 absolute top-1/2 cursor-pointer right-2 transform -translate-y-1/2 bg-black/50 text-white p-4 rounded-full shadow-lg">
-                                <FaChevronRight className='w-6 h-6' />
-                            </button>
-                        </>
-                    )}
-                    <Swiper
-                        modules={[Navigation, Pagination, Autoplay]}
-                        autoplay={autoplay ? { delay: 3000, disableOnInteraction: true } : false}
-                        navigation={navigation ? { nextEl: ".swiper-button-next-custom", prevEl: ".swiper-button-prev-custom" } : false}
-                        pagination={pagination}
-                        loop={loop}
-                        slidesPerView={slidesPerView}
-                        spaceBetween={spaceBetween}
-                    >
-                        {images.map((image, index) => (
-                            <SwiperSlide key={index}>
+            <div className="relative">
+                {/* Custom Navigation Buttons */}
+                {navigation && (
+                    <>
+                        <button className="swiper-button-prev-custom sm:block hidden z-10 absolute top-1/2 cursor-pointer left-2 transform -translate-y-1/2 bg-black/50 text-white p-4 rounded-full shadow-lg">
+                            <FaChevronLeft className='w-6 h-6' />
+                        </button>
+                        <button className="swiper-button-next-custom sm:block hidden z-10 absolute top-1/2 cursor-pointer right-2 transform -translate-y-1/2 bg-black/50 text-white p-4 rounded-full shadow-lg">
+                            <FaChevronRight className='w-6 h-6' />
+                        </button>
+                    </>
+                )}
+                <Swiper
+                    modules={[Navigation, Pagination, Autoplay]}
+                    autoplay={autoplay ? { delay: 3000, disableOnInteraction: true } : false}
+                    navigation={navigation ? { nextEl: ".swiper-button-next-custom", prevEl: ".swiper-button-prev-custom" } : false}
+                    pagination={pagination}
+                    loop={loop}
+                    slidesPerView={slidesPerView}
+                    spaceBetween={spaceBetween}
+                    breakpoints={breakpoints}
+                >
+                    {images.map((image, index) => (
+                        <SwiperSlide key={index}>
+                            <div className="relative">
                                 <img
                                     src={image.url}
                                     alt={`Slide ${index + 1}`}
                                     className="w-full h-[150px] sm:h-[250px] md:h-[390px] lg:h-[420px] xl:h-[490px] object-cover rounded-3xl"
                                 />
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                </div>
-            )}
 
-            {variant === 'caption' && (
-                <Swiper
-                    modules={[Navigation, Pagination, Autoplay]}
-                    autoplay={autoplay ? { delay: 3000, disableOnInteraction: false } : false}
-                    navigation={navigation}
-                    pagination={pagination}
-                    loop={loop}
-                    slidesPerView={slidesPerView}
-                    spaceBetween={spaceBetween}
-                >
-                    {images.map((image, index) => (
-                        <SwiperSlide key={index}>
-                            <div style={{ position: 'relative' }}>
-                                <img
-                                    src={image.url}
-                                    alt={`Slide ${index + 1}`}
-                                    className="w-full h-auto object-cover"
-                                />
-                                <div
-                                    style={{
-                                        position: 'absolute',
-                                        top: 0,
-                                        left: 0,
-                                        width: '100%',
-                                        height: '100%',
-                                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                                        zIndex: 1,
-                                    }}
-                                ></div>
-                                {image.caption && (
-                                    <div
-                                        style={{
-                                            position: 'absolute',
-                                            top: '50%',
-                                            left: '50%',
-                                            transform: 'translate(-50%, -50%)',
-                                            width: '100%',
-                                            color: '#fff',
-                                            padding: '60px',
-                                            fontSize: '14px',
-                                            zIndex: 2,
-                                        }}
-                                    >
-                                        <div className='text-lg xl:text-xl font-bold'>
-                                            {image.caption}
-                                        </div>
-                                        <div className='text-[8px] sm:text-xs xl:text-sm mb-2 text-justify'>
-                                            Lorem Ipsum
-                                        </div>
+                                {/* Gradient Overlay */}
+                                <div className="absolute bottom-0 left-0 w-full h-full rounded-b-3xl bg-gradient-to-t from-black/90 via-black/50 to-black/10 z-10" />
+
+                                {/* Text Content */}
+                                {(image.title || image.description) && (
+                                    <div className="absolute bottom-0 left-0 w-full z-20 p-4 md:p-10 text-white">
+                                        {image.title && <h2 className="text-xl md:text-3xl font-bold bg-gradient-to-tr from-[#8C00FF] to-white text-transparent bg-clip-text line-clamp-2">{image.title}</h2>}
+                                        {image.description && <p className="text-sm line-clamp-3 md:block hidden">{image.description}</p>}
                                     </div>
                                 )}
                             </div>
                         </SwiperSlide>
                     ))}
                 </Swiper>
-            )}
-
-            {variant === 'thumbnail' && (
-                <>
-                    <Swiper
-                        modules={[Navigation, Pagination, Thumbs, Autoplay]}
-                        thumbs={{ swiper: thumbsSwiper }}
-                        autoplay={autoplay ? { delay: 3000, disableOnInteraction: false } : false}
-                        navigation={navigation}
-                        pagination={{
-                            type: 'fraction',
-                        }}
-                        loop={loop}
-                        slidesPerView={slidesPerView}
-                        spaceBetween={spaceBetween}
-                        className='mb-2'
-                    >
-                        {images.map((image, index) => (
-                            <SwiperSlide key={index}>
-                                <img
-                                    src={image.url}
-                                    alt={`Slide ${index + 1}`}
-                                    className="w-full h-auto object-cover"
-                                />
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                    <Swiper
-                        modules={[Navigation, Pagination, Thumbs]}
-                        onSwiper={setThumbsSwiper}
-                        slidesPerView={4}
-                        spaceBetween={8}
-                        watchSlidesProgress
-                    >
-                        {images.map((image, index) => (
-                            <SwiperSlide key={index}>
-                                <img
-                                    src={image.url}
-                                    alt={`Thumbnail ${index + 1}`}
-                                    className="w-full h-auto object-cover cursor-pointer"
-                                />
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                </>
-            )}
-
-            {variant === 'EffectCards' && (
-                <Swiper
-                    effect={'cards'}
-                    grabCursor={true}
-                    modules={[EffectCards]}
-                >
-                    {images.map((image, index) => (
-                        <SwiperSlide key={index}>
-                            <img
-                                src={image.url}
-                                alt={`Slide ${index + 1}`}
-
-                            />
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
-            )}
+            </div>
         </>
     );
 };

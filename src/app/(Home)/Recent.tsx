@@ -2,7 +2,7 @@ import React from 'react'
 
 const Recent = () => {
     return (
-        <div>Recent</div>
+        <div className='min-h-screen'>Recent</div>
     )
 }
 
