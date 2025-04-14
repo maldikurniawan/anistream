@@ -122,7 +122,7 @@ const Carousel: React.FC<CarouselProps> = ({
                                             {image.caption}
                                         </div>
                                         <div className='text-[8px] sm:text-xs xl:text-sm mb-2 text-justify'>
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.
+                                            Lorem Ipsum
                                         </div>
                                     </div>
                                 )}
