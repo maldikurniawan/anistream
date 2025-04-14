@@ -4,11 +4,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Navigation, Pagination, Autoplay, Thumbs, EffectCards } from 'swiper/modules';
 import { useState } from 'react';
-// @ts-ignore
 import 'swiper/css';
-// @ts-ignore
 import 'swiper/css/navigation';
-// @ts-ignore
 import 'swiper/css/pagination';
 
 interface ImageItem {
@@ -37,6 +34,7 @@ const Carousel: React.FC<CarouselProps> = ({
     spaceBetween = 10,
     variant = 'simple',
 }) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
 
     return (
