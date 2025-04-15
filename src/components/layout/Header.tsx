@@ -144,14 +144,14 @@ const Header = () => {
                 </div>
                 <div className="p-4 h-96 text-left space-y-2">
                     {menu.map((item, itemIdx) => (
-                        <div key={itemIdx}>
-                            <div className="px-6 py-2 flex items-center border-2 justify-between text-white hover:bg-[#333333] font-medium whitespace-nowrap cursor-pointer rounded-lg" onClick={() => setNavOpen(false)}>
+                        <Link key={itemIdx} href={item.link} className="w-full">
+                            <div className="px-6 py-2 flex items-center border-2 justify-between mb-2 text-white hover:bg-[#333333] font-medium whitespace-nowrap cursor-pointer rounded-lg" onClick={() => setNavOpen(false)}>
                                 <span>{item.title}</span>
                                 {item.icon}
                             </div>
-                        </div>
+                        </Link>
                     ))}
-                    <div className="px-6 py-2 mt-10 flex items-center border-2 justify-between text-white hover:bg-[#333333] font-medium whitespace-nowrap cursor-pointer rounded-lg" onClick={() => setNavOpen(false)}>
+                    <div className="px-6 py-2 mt-8 flex items-center border-2 justify-between text-white hover:bg-[#333333] font-medium whitespace-nowrap cursor-pointer rounded-lg" onClick={() => setNavOpen(false)}>
                         <span>Masuk</span>
                         <IoIosLogIn />
                     </div>
