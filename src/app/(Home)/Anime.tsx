@@ -25,11 +25,11 @@ const Anime = () => {
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
                 {animeList.map((anime: any) => (
                     <motion.div
+                        key={anime.animeId}
                         className='rounded-xl'
                         whileHover={{ y: -10 }}
                     >
                         <Link
-                            key={anime.animeId}
                             href={"/"}
                             className="group overflow-hidden transition-all duration-200"
                         >

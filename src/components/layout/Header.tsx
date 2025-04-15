@@ -48,8 +48,8 @@ const Header = () => {
     return (
         <>
             <header
-                className={`px-4 md:px-[60px] h-20 md:h-[106px] justify-between flex border-b border-[#333333] items-center w-full fixed z-40 transition-all duration-300 py-0 ${scrolled
-                    ? "shadow bg-[#1A1A1A90] backdrop-blur-xl"
+                className={`px-4 md:px-[60px] h-20 md:h-[106px] justify-between flex border-b-2 border-[#333333] items-center w-full fixed z-40 transition-all duration-300 py-0 ${scrolled
+                    ? "shadow bg-[#1A1A1A90] backdrop-blur-xl hover:bg-[#1A1A1A]"
                     : "shadow-none bg-[#1A1A1A]"
                     }`}
             >
@@ -71,7 +71,7 @@ const Header = () => {
                             </form>
                         </div>
                     </div>
-                    <div className="hidden md:flex items-center justify-between border-t border-[#333333] w-full px-4">
+                    <div className="hidden md:flex items-center justify-between border-t-2 border-[#333333] w-full">
                         {/* Left Side - Menu */}
                         <div className="flex items-center gap-x-4">
                             {menu.map((item, itemIdx) => (
@@ -100,22 +100,22 @@ const Header = () => {
                         onClick={toggleSearch}
                     >
                         {searchOpen ? (
-                            <LiaTimesSolid size={36} className="border border-white/10 p-2 rounded-md" />
+                            <LiaTimesSolid size={36} className="border-2 border-white/10 p-2 rounded-md" />
                         ) : (
-                            <PiMagnifyingGlass size={36} className="border border-white/10 p-2 rounded-md" />
+                            <PiMagnifyingGlass size={36} className="border-2 border-white/10 p-2 rounded-md" />
                         )}
                     </button>
                     <button
                         onClick={() => setNavOpen(true)}
                         className="block md:hidden text-white py-5 cursor-pointer"
                     >
-                        <FaBars size={36} className="border border-white/10 p-2 rounded-md" />
+                        <FaBars size={36} className="border-2 border-white/10 p-2 rounded-md" />
                     </button>
                 </div>
                 {/* Search Input untuk Mobile */}
                 {searchOpen && (
                     <div className="absolute top-20 left-0 right-0 md:hidden">
-                        <div className="bg-[#1A1A1A] border-b border-white/10 px-4 py-2">
+                        <div className="bg-[#1A1A1A] border-b-2 border-white/10 px-4 py-2">
                             <div className="relative text-white">
                                 <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                     <FaSearch />
@@ -140,22 +140,22 @@ const Header = () => {
                 className="fixed z-50 top-0 h-full min-[300px]:w-[300px] bg-[#1F1F1F] drop-shadow transition-all"
             >
                 <div className="flex items-center justify-end text-white p-4">
-                    <FaXmark className="cursor-pointer w-8 h-8 border p-1 rounded-full" onClick={() => setNavOpen(false)} />
+                    <FaXmark className="cursor-pointer w-8 h-8 border-2 p-1 rounded-full" onClick={() => setNavOpen(false)} />
                 </div>
                 <div className="p-4 h-96 text-left space-y-2">
                     {menu.map((item, itemIdx) => (
                         <div key={itemIdx}>
-                            <div className="px-6 py-2 flex items-center border justify-between text-white hover:bg-[#333333] font-medium whitespace-nowrap cursor-pointer rounded-lg" onClick={() => setNavOpen(false)}>
+                            <div className="px-6 py-2 flex items-center border-2 justify-between text-white hover:bg-[#333333] font-medium whitespace-nowrap cursor-pointer rounded-lg" onClick={() => setNavOpen(false)}>
                                 <span>{item.title}</span>
                                 {item.icon}
                             </div>
                         </div>
                     ))}
-                    <div className="px-6 py-2 mt-10 flex items-center border justify-between text-white hover:bg-[#333333] font-medium whitespace-nowrap cursor-pointer rounded-lg" onClick={() => setNavOpen(false)}>
+                    <div className="px-6 py-2 mt-10 flex items-center border-2 justify-between text-white hover:bg-[#333333] font-medium whitespace-nowrap cursor-pointer rounded-lg" onClick={() => setNavOpen(false)}>
                         <span>Masuk</span>
                         <IoIosLogIn />
                     </div>
-                    <div className="px-6 py-2 flex items-center border justify-between text-white hover:bg-[#333333] font-medium whitespace-nowrap cursor-pointer rounded-lg" onClick={() => setNavOpen(false)}>
+                    <div className="px-6 py-2 flex items-center border-2 justify-between text-white hover:bg-[#333333] font-medium whitespace-nowrap cursor-pointer rounded-lg" onClick={() => setNavOpen(false)}>
                         <span>Daftar</span>
                         <IoPersonAddOutline />
                     </div>

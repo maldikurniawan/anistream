@@ -25,10 +25,10 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
     };
 
     return (
-        <div className="flex justify-center mt-4 space-x-2">
+        <div className="flex justify-center mt-4 space-x-1 sm:space-x-2">
             {/* Previous Button */}
             <button
-                className="px-2 sm:px-3 py-1 sm:py-1.5 bg-transparent border border-[#333333] rounded cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+                className="px-2 sm:px-3 py-1 sm:py-1.5 bg-transparent border sm:border-2 border-[#333333] rounded cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
             >
@@ -39,7 +39,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
             {getPaginationNumbers().map((page, index) => (
                 <button
                     key={index}
-                    className={`px-2 sm:px-3 py-0.5 sm:py-1.5 rounded cursor-pointer ${page === currentPage ? "bg-[#8C00FF]" : "bg-transparent border border-[#333333]"
+                    className={`px-2 sm:px-3 py-0.5 sm:py-1.5 rounded cursor-pointer ${page === currentPage ? "border sm:border-2 border-[#8C00FF]" : "border sm:border-2 border-[#333333]"
                         } ${page === "..." ? "pointer-events-none opacity-50" : ""}`}
                     onClick={() => typeof page === "number" && onPageChange(page)}
                 >
@@ -49,7 +49,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
 
             {/* Next Button */}
             <button
-                className="px-2 sm:px-3 py-1 sm:py-1.5 bg-transparent border border-[#333333] rounded cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+                className="px-2 sm:px-3 py-1 sm:py-1.5 bg-transparent border sm:border-2 border-[#333333] rounded cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
                 onClick={() => onPageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
             >
