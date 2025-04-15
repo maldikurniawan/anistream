@@ -26,7 +26,6 @@ const Anime = () => {
                 {animeList.map((anime: any) => (
                     <motion.div
                         key={anime.animeId}
-                        className='rounded-xl'
                         whileHover={{ y: -10 }}
                     >
                         <Link
@@ -47,10 +46,10 @@ const Anime = () => {
                                 </div>
                             </div>
 
-                            <div className="p-3 sm:p-4 sm:space-y-1">
+                            <div className="py-3 sm:py-4 sm:space-y-1">
                                 <h2 className="font-bold text-base text-gray-300 line-clamp-1 group-hover:bg-gradient-to-tr from-[#8C00FF] to-white group-hover:text-transparent group-hover:bg-clip-text">{anime.title}</h2>
                                 <p className="text-[13px] text-gray-400 flex items-center gap-2">
-                                    <FaPlay className='w-[9px] h-[9px] sm:w-3 sm:h-3' />
+                                    <FaPlay className='w-[10.5px] h-[10.5px] sm:w-3 sm:h-3' />
                                     <span>Episode {anime.episodes}</span>
                                 </p>
                                 <p className="text-[13px] text-gray-400 flex items-center gap-2">
