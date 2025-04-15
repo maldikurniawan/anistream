@@ -2,10 +2,10 @@
 
 import { useGetData } from "@/actions";
 import { Carousel } from "@/components";
-import { BANNER_URL } from "@/constants";
+import { API_URL_seasonNow } from "@/constants";
 
 const Banner = () => {
-    const getBanner = useGetData(BANNER_URL, ["banner"], true);
+    const getBanner = useGetData(API_URL_seasonNow, ["banner"], true);
 
     const images = getBanner.data?.data?.map((item: any) => ({
         url: item.trailer?.images?.maximum_image_url,

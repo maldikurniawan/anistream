@@ -1,6 +1,8 @@
 export const BASE_URL = "https://wajik-anime-api.vercel.app/samehadaku";
-export const BANNER_URL = "https://api.jikan.moe/v4/seasons/now";
+export const JIKAN_URL = "https://api.jikan.moe/v4";
 
+export const API_URL_seasonNow = `${JIKAN_URL}/seasons/now`;
+export const API_URL_seasons = `${JIKAN_URL}/seasons`;
 export const API_URL_genres = `${BASE_URL}/genres`;
 export const API_URL_anime = `${BASE_URL}/anime`;
 export const API_URL_schedule = `${BASE_URL}/schedule`;

@@ -17,10 +17,12 @@ const Anime = () => {
 
     return (
         <div className="min-h-screen bg-[#1F1F1F] p-4 sm:px-[60px] sm:py-6 text-white">
-            <div className='flex items-center gap-2 mb-4 sm:mb-6'>
-                <div className='border-2 border-[#8C00FF] rounded-lg py-1 px-3 text-[#D7A7FF]'>Recent</div>
-                <div className='border-2 border-[#333333] rounded-lg py-1 px-3'>Popular</div>
-                <div className='border-2 border-[#333333] rounded-lg py-1 px-3'>Ongoing</div>
+            <div className='overflow-x-auto scroll-hidden flex justify-start mb-4 sm:mb-6'>
+                <div className='flex items-center gap-2'>
+                    <div className='border-2 border-[#8C00FF] rounded-lg py-1 px-3 text-[#D7A7FF]'>Recent</div>
+                    <div className='border-2 border-[#333333] rounded-lg py-1 px-3'>Popular</div>
+                    <div className='border-2 border-[#333333] rounded-lg py-1 px-3'>Batch</div>
+                </div>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
                 {animeList.map((anime: any) => (

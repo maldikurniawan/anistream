@@ -24,9 +24,9 @@ const Header = () => {
 
     const menu = [
         { title: "Home", link: "/", icon: <FaHome /> },
-        { title: "Trending", link: "#", icon: <FaFire /> },
+        { title: "Trending", link: "/trending", icon: <FaFire /> },
         { title: "Schedule", link: "/schedule", icon: <FaCalendar /> },
-        { title: "History", link: "#", icon: <FaClockRotateLeft /> },
+        { title: "History", link: "/", icon: <FaClockRotateLeft /> },
     ];
 
     useOnClickOutside(ref as any, () => setNavOpen(false));
@@ -140,22 +140,22 @@ const Header = () => {
                 className="fixed z-50 top-0 h-full min-[300px]:w-[300px] bg-[#1F1F1F] drop-shadow transition-all"
             >
                 <div className="flex items-center justify-end text-white p-4">
-                    <FaXmark className="cursor-pointer w-8 h-8 border-2 p-1 rounded-full" onClick={() => setNavOpen(false)} />
+                    <FaXmark className="cursor-pointer w-8 h-8 border-2 border-[#333333] p-1 rounded-full" onClick={() => setNavOpen(false)} />
                 </div>
                 <div className="p-4 h-96 text-left space-y-2">
                     {menu.map((item, itemIdx) => (
                         <Link key={itemIdx} href={item.link} className="w-full">
-                            <div className="px-6 py-2 flex items-center border-2 justify-between mb-2 text-white hover:bg-[#333333] font-medium whitespace-nowrap cursor-pointer rounded-lg" onClick={() => setNavOpen(false)}>
+                            <div className="px-6 py-2 flex items-center border-2 justify-between mb-2 text-white border-[#333333] font-medium whitespace-nowrap cursor-pointer rounded-lg" onClick={() => setNavOpen(false)}>
                                 <span>{item.title}</span>
                                 {item.icon}
                             </div>
                         </Link>
                     ))}
-                    <div className="px-6 py-2 mt-8 flex items-center border-2 justify-between text-white hover:bg-[#333333] font-medium whitespace-nowrap cursor-pointer rounded-lg" onClick={() => setNavOpen(false)}>
+                    <div className="px-6 py-2 mt-8 flex items-center border-2 justify-between text-white border-[#333333] font-medium whitespace-nowrap cursor-pointer rounded-lg" onClick={() => setNavOpen(false)}>
                         <span>Masuk</span>
                         <IoIosLogIn />
                     </div>
-                    <div className="px-6 py-2 flex items-center border-2 justify-between text-white hover:bg-[#333333] font-medium whitespace-nowrap cursor-pointer rounded-lg" onClick={() => setNavOpen(false)}>
+                    <div className="px-6 py-2 flex items-center border-2 justify-between text-white border-[#333333] font-medium whitespace-nowrap cursor-pointer rounded-lg" onClick={() => setNavOpen(false)}>
                         <span>Daftar</span>
                         <IoPersonAddOutline />
                     </div>
