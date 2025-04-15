@@ -29,7 +29,6 @@ const Header = () => {
         { title: "History", link: "#", icon: <FaClockRotateLeft /> },
     ];
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     useOnClickOutside(ref as any, () => setNavOpen(false));
 
     useEffect(() => {
@@ -56,7 +55,7 @@ const Header = () => {
             >
                 <div className="flex flex-col w-full">
                     <div className="flex items-center gap-4 text-white my-3.5">
-                        <Link href={"/"} className="cursor-pointer text-xl md:text-3xl font-bold text-[#8C00FF]">ANIMIRU</Link>
+                        <Link href={"/"} className="cursor-pointer text-xl md:text-3xl font-bold bg-gradient-to-tr from-[#8C00FF] to-white text-transparent bg-clip-text">ANIMIRU</Link>
                         <div className="relative flex-1 rounded-xl hidden md:block">
                             <form className="w-full">
                                 <div className="relative">
@@ -76,7 +75,7 @@ const Header = () => {
                         {/* Left Side - Menu */}
                         <div className="flex items-center gap-x-4">
                             {menu.map((item, itemIdx) => (
-                                <Link href={item.link} key={itemIdx} className="text-white hover:text-[#8C00FF] flex items-center gap-1 py-[9px] font-medium whitespace-nowrap text-sm cursor-pointer border-b-2 border-transparent hover:border-[#8C00FF] transition-all duration-200">
+                                <Link href={item.link} key={itemIdx} className="text-white hover:text-[#D7A7FF] flex items-center gap-1 py-[9px] font-medium whitespace-nowrap text-sm cursor-pointer border-b-2 border-transparent hover:border-[#8C00FF] transition-all duration-200">
                                     {item.icon}
                                     <span>{item.title}</span>
                                 </Link>
@@ -84,13 +83,13 @@ const Header = () => {
                         </div>
                         {/* Right Side - Authentication */}
                         <div className="flex gap-x-4">
-                            <div className="text-white hover:text-[#8C00FF] flex items-center gap-1 py-[9px] font-medium whitespace-nowrap cursor-pointer border-b-2 text-sm border-transparent hover:border-[#8C00FF] transition-all duration-200">
+                            <div className="text-white hover:text-[#D7A7FF] flex items-center gap-1 py-[9px] font-medium whitespace-nowrap cursor-pointer border-b-2 text-sm border-transparent hover:border-[#8C00FF] transition-all duration-200">
                                 <IoIosLogIn />
-                                <span>Masuk</span>
+                                <span>Login</span>
                             </div>
-                            <div className="text-white hover:text-[#8C00FF] flex items-center gap-1 py-[9px] font-medium whitespace-nowrap cursor-pointer border-b-2 text-sm border-transparent hover:border-[#8C00FF] transition-all duration-200">
+                            <div className="text-white hover:text-[#D7A7FF] flex items-center gap-1 py-[9px] font-medium whitespace-nowrap cursor-pointer border-b-2 text-sm border-transparent hover:border-[#8C00FF] transition-all duration-200">
                                 <IoPersonAddOutline />
-                                <span>Daftar</span>
+                                <span>Register</span>
                             </div>
                         </div>
                     </div>

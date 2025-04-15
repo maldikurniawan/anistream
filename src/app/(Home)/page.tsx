@@ -1,14 +1,14 @@
 import { Footer, Header } from '@/components'
 import React from 'react'
 import Banner from "./Banner"
-import Recent from './Recent'
+import Anime from './Anime'
 
 const Home = () => {
   return (
     <main className='overflow-x-hidden bg-black text-white'>
       <Header />
       <Banner />
-      <Recent />
+      <Anime />
       <Footer />
     </main>
   )
