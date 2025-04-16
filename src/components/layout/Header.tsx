@@ -48,7 +48,7 @@ const Header = () => {
     return (
         <>
             <header
-                className={`px-4 md:px-[60px] h-20 md:h-[106px] justify-between flex border-b-2 border-[#333333] items-center w-full fixed z-40 transition-all duration-300 py-0 ${scrolled
+                className={`px-4 md:px-[60px] h-[76px] md:h-[106px] justify-between flex border-b-2 border-[#333333] items-center w-full fixed z-40 transition-all duration-300 py-0 ${scrolled
                     ? "shadow bg-[#1A1A1A90] backdrop-blur-xl hover:bg-[#1A1A1A]"
                     : "shadow-none bg-[#1A1A1A]"
                     }`}
