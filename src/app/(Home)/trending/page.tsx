@@ -40,7 +40,7 @@ const Trending = () => {
     }, [selectedYear, selectedSeason]);
 
     return (
-        <main>
+        <main className="overflow-x-hidden">
             <Header />
             <div className="min-h-screen bg-[#1F1F1F] text-white pt-[94px] p-4 sm:pt-[130px] sm:px-[60px] sm:pb-8">
                 {/* Select Tahun dan Season */}
@@ -100,10 +100,10 @@ const Trending = () => {
                                                 <img
                                                     src={item.images.webp.large_image_url}
                                                     alt={item.title}
-                                                    className="w-[160px] h-[256px] object-cover rounded-lg"
+                                                    className="w-[144px] sm:w-[160px] h-[256px] object-cover rounded-lg"
                                                 />
                                                 <div>
-                                                    <h3 className="font-bold text-lg line-clamp-1">{item.title}</h3>
+                                                    <h3 className="font-semibold sm:font-bold text-sm sm:text-lg line-clamp-1">{item.title}</h3>
                                                     <p className="text-sm mb-1 text-gray-500 line-clamp-1 italic">{item.title_japanese}</p>
                                                     <div className="flex flex-wrap gap-2">
                                                         <span className="text-xs text-gray-400 flex items-center gap-1 bg-[#2A2A2A] p-0.5 px-1.5 rounded">
@@ -112,7 +112,7 @@ const Trending = () => {
                                                         </span>
                                                         <span className="text-xs text-gray-400 flex items-center gap-1 bg-[#2A2A2A] p-0.5 px-1.5 rounded">
                                                             <FaVideo />
-                                                            {item.episodes}
+                                                            {item.episodes || "N/A"}
                                                         </span>
                                                         <span className="text-xs text-gray-400 flex items-center gap-1 bg-[#2A2A2A] p-0.5 px-1.5 rounded">
                                                             <ImTv />
@@ -143,7 +143,16 @@ const Trending = () => {
                                 <p className="text-gray-400">Tidak ada data tersedia.</p>
                             )
                         ) : (
-                            <p className="text-gray-400">Mengambil data...</p>
+                            <div className="space-y-4 sm:space-y-6">
+                                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+                                    <div className="animate-pulse bg-[#333333] w-full h-[292px] rounded-lg"></div>
+                                    <div className="animate-pulse bg-[#333333] w-full h-[292px] rounded-lg"></div>
+                                </div>
+                                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+                                    <div className="animate-pulse bg-[#333333] w-full h-[292px] rounded-lg"></div>
+                                    <div className="animate-pulse bg-[#333333] w-full h-[292px] rounded-lg"></div>
+                                </div>
+                            </div>
                         )}
                     </div>
                 )}

@@ -15,6 +15,9 @@ const Banner = () => {
 
     return (
         <div className="bg-[#1A1A1A] text-white pt-[94px] pb-4 sm:pt-[130px] px-4 sm:px-[60px] sm:pb-8">
+            {getBanner.isLoading && (
+                <div className="animate-pulse bg-[#333333] w-full h-[150px] sm:h-[250px] md:h-[390px] lg:h-[420px] xl:h-[490px] rounded-3xl"></div>
+            )}
             <Carousel
                 images={images}
                 navigation={false}

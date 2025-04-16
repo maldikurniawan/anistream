@@ -27,7 +27,7 @@ const Popular = () => {
         <main>
             <Header />
             <Banner />
-            <div className="min-h-screen bg-[#1F1F1F] text-white pt-[94px] p-4 sm:pt-[130px] sm:px-[60px] sm:pb-8">
+            <div className="min-h-screen bg-[#1F1F1F] text-white p-4 sm:px-[60px] sm:py-6">
                 <div className='overflow-x-auto scroll-hidden flex justify-start mb-4 sm:mb-6'>
                     <div className='flex items-center gap-2'>
                         {menu.map((item, idx) => {
@@ -45,6 +45,15 @@ const Popular = () => {
                         })}
                     </div>
                 </div>
+
+                {getPopular.isLoading && (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6">
+                        {Array(30).fill(null).map((_, index) => (
+                            <div key={index} className="animate-pulse bg-[#333333] w-full h-[250px] rounded-xl"></div>
+                        ))}
+                    </div>
+                )}
+
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6">
                     {popularList.animeList?.map((anime: any, index: number) => (
                         <motion.div

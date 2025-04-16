@@ -42,10 +42,19 @@ const Anime = () => {
                     })}
                 </div>
             </div>
+
+            {getRecent.isLoading && (
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
+                    {Array(16).fill(null).map((_, index) => (
+                        <div key={index} className="animate-pulse bg-[#333333] w-full h-[220px] rounded-xl"></div>
+                    ))}
+                </div>
+            )}
+
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
-                {animeList.map((anime: any) => (
+                {animeList.map((anime: any, index: any) => (
                     <motion.div
-                        key={anime.animeId}
+                        key={`${anime.animeId}-${index}`}
                         whileHover={{ y: -10 }}
                     >
                         <Link

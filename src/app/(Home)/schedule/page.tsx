@@ -28,6 +28,17 @@ const Schedule = () => {
                     {moment().locale("en").format("dddd, D MMMM YYYY")}
                 </div>
 
+                {getSchedule.isLoading && (
+                    <div className="space-y-4 sm:space-y-6">
+                        <div className="animate-pulse bg-[#333333] w-full h-[44px] rounded-lg"></div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+                            {Array(8).fill(null).map((_, index) => (
+                                <div key={index} className="animate-pulse bg-[#333333] w-full h-[192px] rounded-lg"></div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
                 {/* Tombol hari */}
                 <div className="overflow-x-auto scroll-hidden flex max-[820px]:justify-start justify-center">
                     <div className="inline-flex gap-0 mb-4 sm:mb-6">
@@ -62,9 +73,9 @@ const Schedule = () => {
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
                             {days
                                 .find((d: any) => d.day === selectedDay)
-                                ?.animeList?.map((anime: any) => (
+                                ?.animeList?.map((anime: any, index: any) => (
                                     <motion.div
-                                        key={anime.animeId}
+                                        key={index}
                                         whileHover={{ y: -10 }}
                                     >
                                         <Link
@@ -89,7 +100,7 @@ const Schedule = () => {
                                                     {anime.type}
                                                 </div>
                                                 <div className="absolute bottom-2 right-2 bg-black/80 p-1 text-sm rounded font-semibold flex items-center gap-1">
-                                                    <FaStar className="text-[#FFFF00]"/>
+                                                    <FaStar className="text-[#FFFF00]" />
                                                     <span>{anime.score || "N/A"}</span>
                                                 </div>
                                             </div>
