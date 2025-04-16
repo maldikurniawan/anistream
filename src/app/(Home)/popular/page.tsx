@@ -34,7 +34,7 @@ const Popular = () => {
                                 <Link
                                     key={idx}
                                     href={item.href}
-                                    className={`rounded-lg py-1 px-3 border-2 transition-all duration-200
+                                    className={`rounded-lg py-1 px-3 border-2 transition-all duration-300
                                     ${isActive ? 'border-[#8C00FF] text-[#E3BFFF]' : 'border-[#333333] text-white hover:border-[#8C00FF] hover:text-[#E3BFFF]'}`}
                                 >
                                     {item.title}

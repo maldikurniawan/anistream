@@ -4,13 +4,25 @@ import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from 'next/navigation';
-import { FaBars, FaCalendar, FaFire, FaHome, FaSearch } from "react-icons/fa";
+import { FaBars, FaCalendar, FaFire, FaHome, FaSearch, FaTimes } from "react-icons/fa";
 import { FaClockRotateLeft, FaXmark } from "react-icons/fa6";
 import { IoIosLogIn } from "react-icons/io";
 import { IoPersonAddOutline } from "react-icons/io5";
 import Link from "next/link";
 import { PiMagnifyingGlass } from "react-icons/pi";
 import { LiaTimesSolid } from "react-icons/lia";
+import { API_URL_search } from "@/constants";
+
+type Anime = {
+    title: string;
+    poster: string;
+    type: string;
+    score: string;
+    status: string;
+    animeId: string;
+    href: string;
+    genreList: string[];
+};
 
 const Header = () => {
     const ref = useRef<HTMLDivElement>(null);
@@ -18,6 +30,8 @@ const Header = () => {
     const { width } = useWindowSize();
     const [navOpen, setNavOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [query, setQuery] = useState("");
+    const [filteredAnime, setFilteredAnime] = useState<Anime[]>([]);
     const [searchOpen, setSearchOpen] = useState(false);
 
     const toggleSearch = () => {
@@ -30,6 +44,49 @@ const Header = () => {
         { title: "Schedule", link: "/schedule", icon: <FaCalendar /> },
         { title: "History", link: "#", icon: <FaClockRotateLeft /> },
     ];
+
+    const handleSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value.toLowerCase();
+        setQuery(value);
+
+        if (value.trim() === "") {
+            setFilteredAnime([]);
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_URL_search}?q=${encodeURIComponent(value)}`);
+            const json = await response.json();
+            const animeList = json.data.animeList;
+            const filtered = animeList.filter((anime: any) =>
+                anime.title.toLowerCase().includes(value)
+            );
+            setFilteredAnime(filtered);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            setFilteredAnime([]);
+        }
+    };
+
+    const clearSearch = () => {
+        setQuery("");
+        setFilteredAnime([]);
+    };
+
+    const highlightMatch = (text: string, query: string) => {
+        if (!query) return text; // Jika query kosong, tampilkan teks biasa
+
+        const regex = new RegExp(`(${query})`, "gi"); // Buat regex untuk pencarian
+        const parts = text.split(regex); // Pisahkan teks berdasarkan query
+
+        return parts.map((part, index) =>
+            regex.test(part) ? (
+                <span key={index} className="text-[#8C00FF]">{part}</span> // Bagian yang cocok berwarna ungu
+            ) : (
+                part
+            )
+        );
+    };
 
     useOnClickOutside(ref as any, () => setNavOpen(false));
 
@@ -68,9 +125,50 @@ const Header = () => {
                                         type="text"
                                         className="bg-[#333333] text-white text-sm rounded-lg focus:ring-[#8C00FF] focus:border-[#8C00FF] block w-full ps-10 p-1.5"
                                         placeholder="Cari Anime"
+                                        value={query}
+                                        onChange={handleSearch}
                                     />
+                                    {query && (
+                                        <div
+                                            className="absolute inset-y-0 end-0 flex items-center pr-2 cursor-pointer"
+                                            onClick={clearSearch}
+                                        >
+                                            <FaTimes />
+                                        </div>
+                                    )}
                                 </div>
                             </form>
+                            {/* Search Results */}
+                            {query && (
+                                <div className="absolute mt-2 bg-[#1A1A1A] border-2 border-[#333333] p-3 rounded-l-lg shadow-lg w-full max-h-[400px] overflow-y-auto">
+                                    {filteredAnime.length > 0 ? (
+                                        filteredAnime.map((anime) => (
+                                            <Link
+                                                href={"/"}
+                                                key={anime.animeId}
+                                                onClick={clearSearch}
+                                                className="flex items-center gap-4 p-1.5 hover:bg-[#8C00FF50] rounded-lg cursor-pointer"
+                                            >
+                                                <img
+                                                    src={anime.poster || "/noposter.jpg"}
+                                                    alt={anime.title}
+                                                    className="h-16 w-16 aspect-square rounded-xl"
+                                                />
+                                                <div>
+                                                    <p className="text-white font-semibold line-clamp-1">
+                                                        {highlightMatch(anime.title, query)}
+                                                    </p>
+                                                    <p className="text-gray-400 text-xs">
+                                                        {anime.status}
+                                                    </p>
+                                                </div>
+                                            </Link>
+                                        ))
+                                    ) : (
+                                        <p className="text-gray-400 text-xs p-2">Anime yang dicari tidak ditemukan.</p>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     </div>
                     <div className="hidden md:flex items-center justify-between border-t-2 border-[#333333] w-full">
@@ -125,7 +223,7 @@ const Header = () => {
                 </div>
                 {/* Search Input untuk Mobile */}
                 {searchOpen && (
-                    <div className="absolute top-20 left-0 right-0 md:hidden">
+                    <div className="absolute top-[76px] left-0 right-0 md:hidden">
                         <div className="bg-[#1A1A1A] border-b-2 border-white/10 px-4 py-2">
                             <div className="relative text-white">
                                 <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
@@ -133,11 +231,54 @@ const Header = () => {
                                 </div>
                                 <input
                                     type="text"
-                                    className="bg-[#333333] text-white text-sm rounded-lg focus:ring-[#8C00FF] focus:border-[#8C00FF] block w-full ps-10 p-2"
+                                    className="bg-[#333333] text-white text-sm rounded-lg focus:ring-[#9B30FF] focus:border-[#9B30FF] block w-full ps-10 p-2"
                                     placeholder="Cari Anime"
+                                    value={query}
+                                    onChange={handleSearch}
                                 />
+                                {query && (
+                                    <div
+                                        className="absolute inset-y-0 end-0 flex items-center pr-2 cursor-pointer"
+                                        onClick={clearSearch}
+                                    >
+                                        <FaTimes />
+                                    </div>
+                                )}
                             </div>
                         </div>
+                        {/* Search Results */}
+                        {query && (
+                            <div className="px-4">
+                                <div className="mt-[-2px] bg-[#1A1A1A] border-2 border-[#333333] p-3 rounded-b-lg shadow-lg w-full max-h-[400px] overflow-y-auto">
+                                    {filteredAnime.length > 0 ? (
+                                        filteredAnime.map((anime) => (
+                                            <Link
+                                                href={"/"}
+                                                key={anime.animeId}
+                                                onClick={clearSearch}
+                                                className="flex items-center gap-4 p-1.5 hover:bg-[#8C00FF50] rounded-lg cursor-pointer"
+                                            >
+                                                <img
+                                                    src={anime.poster || "/noposter.jpg"}
+                                                    alt={anime.title}
+                                                    className="h-16 w-16 aspect-square rounded-xl"
+                                                />
+                                                <div>
+                                                    <p className="text-white font-semibold line-clamp-1">
+                                                        {highlightMatch(anime.title, query)}
+                                                    </p>
+                                                    <p className="text-gray-400 text-xs">
+                                                        {anime.status}
+                                                    </p>
+                                                </div>
+                                            </Link>
+                                        ))
+                                    ) : (
+                                        <p className="text-gray-400 text-xs p-2">Anime yang dicari tidak ditemukan.</p>
+                                    )}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
 
