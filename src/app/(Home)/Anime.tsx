@@ -7,9 +7,17 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { motion } from "framer-motion";
 import { FaCalendarAlt, FaPlay } from 'react-icons/fa';
+import { usePathname } from 'next/navigation';
 
 const Anime = () => {
     const [currentPage, setCurrentPage] = useState(1);
+    const pathname = usePathname();
+    const menu = [
+        { title: 'Recent', href: '/' },
+        { title: 'Popular', href: '/popular' },
+        { title: 'Batch', href: '/batch' },
+    ];
+
     const getRecent = useGetData(`${API_URL_recent}?page=${currentPage}`, ["recent", currentPage], true);
     const animeData = getRecent.data || {};
     const animeList = animeData.data?.animeList || [];
@@ -19,9 +27,19 @@ const Anime = () => {
         <div className="min-h-screen bg-[#1F1F1F] p-4 sm:px-[60px] sm:py-6 text-white">
             <div className='overflow-x-auto scroll-hidden flex justify-start mb-4 sm:mb-6'>
                 <div className='flex items-center gap-2'>
-                    <div className='border-2 border-[#8C00FF] rounded-lg py-1 px-3 text-[#D7A7FF]'>Recent</div>
-                    <div className='border-2 border-[#333333] rounded-lg py-1 px-3'>Popular</div>
-                    <div className='border-2 border-[#333333] rounded-lg py-1 px-3'>Batch</div>
+                    {menu.map((item, idx) => {
+                        const isActive = pathname === item.href;
+                        return (
+                            <Link
+                                key={idx}
+                                href={item.href}
+                                className={`rounded-lg py-1 px-3 border-2 transition-all duration-200
+                                ${isActive ? 'border-[#8C00FF] text-[#E3BFFF]' : 'border-[#333333] text-white hover:border-[#8C00FF] hover:text-[#E3BFFF]'}`}
+                            >
+                                {item.title}
+                            </Link>
+                        );
+                    })}
                 </div>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
@@ -32,7 +50,7 @@ const Anime = () => {
                     >
                         <Link
                             href={"/"}
-                            className="group overflow-hidden transition-all duration-200"
+                            className="group overflow-hidden transition-all duration-300"
                         >
                             <div className='relative'>
                                 <img

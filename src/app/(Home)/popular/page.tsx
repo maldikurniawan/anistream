@@ -1,14 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import { Footer, Header, Pagination } from "@/components";
-import { API_URL_batch } from "@/constants";
+import { API_URL_popular } from "@/constants";
 import { motion } from "framer-motion";
 import { useGetData } from "@/actions";
 import Link from "next/link";
 import { FaPlay, FaStar } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 
-const Batch = () => {
+const Popular = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const pathname = usePathname();
     const menu = [
@@ -17,10 +17,10 @@ const Batch = () => {
         { title: 'Batch', href: '/batch' },
     ];
 
-    const getBatch = useGetData(`${API_URL_batch}?page=${currentPage}`, ["batch", currentPage], true);
-    const batchData = getBatch.data || {};
-    const batchList = batchData.data || [];
-    const totalPages = batchData.pagination?.totalPages;
+    const getPopular = useGetData(`${API_URL_popular}?page=${currentPage}`, ["popular", currentPage], true);
+    const popularData = getPopular.data || {};
+    const popularList = popularData.data || [];
+    const totalPages = popularData.pagination?.totalPages;
 
     return (
         <main>
@@ -44,7 +44,7 @@ const Batch = () => {
                     </div>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6">
-                    {batchList.batchList?.map((anime: any, index: number) => (
+                    {popularList.animeList?.map((anime: any, index: number) => (
                         <motion.div
                             key={index}
                             whileHover={{ y: -10 }}
@@ -96,4 +96,4 @@ const Batch = () => {
     );
 };
 
-export default Batch;
+export default Popular;

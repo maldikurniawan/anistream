@@ -3,6 +3,7 @@
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from 'next/navigation';
 import { FaBars, FaCalendar, FaFire, FaHome, FaSearch } from "react-icons/fa";
 import { FaClockRotateLeft, FaXmark } from "react-icons/fa6";
 import { IoIosLogIn } from "react-icons/io";
@@ -13,6 +14,7 @@ import { LiaTimesSolid } from "react-icons/lia";
 
 const Header = () => {
     const ref = useRef<HTMLDivElement>(null);
+    const pathname = usePathname();
     const { width } = useWindowSize();
     const [navOpen, setNavOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
@@ -26,7 +28,7 @@ const Header = () => {
         { title: "Home", link: "/", icon: <FaHome /> },
         { title: "Trending", link: "/trending", icon: <FaFire /> },
         { title: "Schedule", link: "/schedule", icon: <FaCalendar /> },
-        { title: "History", link: "/", icon: <FaClockRotateLeft /> },
+        { title: "History", link: "#", icon: <FaClockRotateLeft /> },
     ];
 
     useOnClickOutside(ref as any, () => setNavOpen(false));
@@ -74,20 +76,29 @@ const Header = () => {
                     <div className="hidden md:flex items-center justify-between border-t-2 border-[#333333] w-full">
                         {/* Left Side - Menu */}
                         <div className="flex items-center gap-x-4">
-                            {menu.map((item, itemIdx) => (
-                                <Link href={item.link} key={itemIdx} className="text-white hover:text-[#D7A7FF] flex items-center gap-1 py-[9px] font-medium whitespace-nowrap text-sm cursor-pointer border-b-2 border-transparent hover:border-[#8C00FF] transition-all duration-200">
-                                    {item.icon}
-                                    <span>{item.title}</span>
-                                </Link>
-                            ))}
+                            {menu.map((item, itemIdx) => {
+                                const isActive = pathname === item.link;
+                                return (
+                                    <Link
+                                        href={item.link}
+                                        key={itemIdx}
+                                        className={`flex items-center gap-1 py-[9px] font-medium whitespace-nowrap text-sm cursor-pointer border-b-2 transition-all duration-300 
+                                        ${isActive ? 'text-[#E3BFFF] border-[#8C00FF]' : 'text-white border-transparent hover:text-[#E3BFFF] hover:border-[#8C00FF]'}`}
+                                    >
+                                        {item.icon}
+                                        <span>{item.title}</span>
+                                    </Link>
+                                );
+                            })}
                         </div>
+
                         {/* Right Side - Authentication */}
                         <div className="flex gap-x-4">
-                            <div className="text-white hover:text-[#D7A7FF] flex items-center gap-1 py-[9px] font-medium whitespace-nowrap cursor-pointer border-b-2 text-sm border-transparent hover:border-[#8C00FF] transition-all duration-200">
+                            <div className="text-white hover:text-[#E3BFFF] flex items-center gap-1 py-[9px] font-medium whitespace-nowrap cursor-pointer border-b-2 text-sm border-transparent hover:border-[#8C00FF] transition-all duration-300">
                                 <IoIosLogIn />
                                 <span>Login</span>
                             </div>
-                            <div className="text-white hover:text-[#D7A7FF] flex items-center gap-1 py-[9px] font-medium whitespace-nowrap cursor-pointer border-b-2 text-sm border-transparent hover:border-[#8C00FF] transition-all duration-200">
+                            <div className="text-white hover:text-[#E3BFFF] flex items-center gap-1 py-[9px] font-medium whitespace-nowrap cursor-pointer border-b-2 text-sm border-transparent hover:border-[#8C00FF] transition-all duration-300">
                                 <IoPersonAddOutline />
                                 <span>Register</span>
                             </div>

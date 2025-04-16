@@ -4,10 +4,11 @@ import { Footer, Header } from "@/components";
 import { API_URL_seasons } from "@/constants";
 import { useGetData } from "@/actions";
 import { FaRegClock, FaStar, FaVideo } from "react-icons/fa";
+import { motion } from "framer-motion";
 import { ImTv } from "react-icons/im";
 
 const Trending = () => {
-    const getSeasons = useGetData(API_URL_seasons, ["schedule"], true);
+    const getSeasons = useGetData(API_URL_seasons, ["trending"], true);
     const seasonsData = getSeasons?.data?.data || [];
 
     const filteredYears = seasonsData
@@ -91,46 +92,51 @@ const Trending = () => {
                             seasonResult?.data?.length > 0 ? (
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                                     {seasonResult.data.map((item: any, index: number) => (
-                                        <div key={index} className="bg-[#1A1A1A] p-4 rounded-lg border-2 border-[#333333] flex gap-4">
-                                            <img
-                                                src={item.images.webp.large_image_url}
-                                                alt={item.title}
-                                                className="w-[160px] h-[256px] object-cover rounded-lg"
-                                            />
-                                            <div>
-                                                <h3 className="font-bold text-lg line-clamp-1">{item.title}</h3>
-                                                <p className="text-sm mb-1 text-gray-500 line-clamp-1 italic">{item.title_japanese}</p>
-                                                <div className="flex flex-wrap gap-2">
-                                                    <span className="text-xs text-gray-400 flex items-center gap-1 bg-[#2A2A2A] p-0.5 px-1.5 rounded">
-                                                        <FaStar className="text-[#FFFF00]" />
-                                                        {item.score || "N/A"}
-                                                    </span>
-                                                    <span className="text-xs text-gray-400 flex items-center gap-1 bg-[#2A2A2A] p-0.5 px-1.5 rounded">
-                                                        <FaVideo />
-                                                        {item.episodes}
-                                                    </span>
-                                                    <span className="text-xs text-gray-400 flex items-center gap-1 bg-[#2A2A2A] p-0.5 px-1.5 rounded">
-                                                        <ImTv />
-                                                        {item.type}
-                                                    </span>
-                                                    <span className="text-xs text-gray-400 flex items-center line-clamp-1 gap-1 bg-[#2A2A2A] p-0.5 px-1.5 rounded">
-                                                        <FaRegClock />
-                                                        {item.duration}
-                                                    </span>
-                                                </div>
-                                                <p className="text-sm text-white line-clamp-3 mt-4 sm:mt-6">{item.synopsis}</p>
-                                                <div className="flex flex-wrap gap-2 mt-2 sm:mt-4">
-                                                    {item.genres?.map((genre: any) => (
-                                                        <span
-                                                            key={genre.mal_id}
-                                                            className="text-xs text-gray-400 bg-[#2A2A2A] px-2 py-0.5 rounded"
-                                                        >
-                                                            {genre.name}
+                                        <motion.div
+                                            key={index}
+                                            whileHover={{ y: -10 }}
+                                        >
+                                            <div className="bg-[#1A1A1A] p-4 rounded-lg border-2 border-[#333333] flex gap-4">
+                                                <img
+                                                    src={item.images.webp.large_image_url}
+                                                    alt={item.title}
+                                                    className="w-[160px] h-[256px] object-cover rounded-lg"
+                                                />
+                                                <div>
+                                                    <h3 className="font-bold text-lg line-clamp-1">{item.title}</h3>
+                                                    <p className="text-sm mb-1 text-gray-500 line-clamp-1 italic">{item.title_japanese}</p>
+                                                    <div className="flex flex-wrap gap-2">
+                                                        <span className="text-xs text-gray-400 flex items-center gap-1 bg-[#2A2A2A] p-0.5 px-1.5 rounded">
+                                                            <FaStar className="text-[#FFFF00]" />
+                                                            {item.score || "N/A"}
                                                         </span>
-                                                    ))}
+                                                        <span className="text-xs text-gray-400 flex items-center gap-1 bg-[#2A2A2A] p-0.5 px-1.5 rounded">
+                                                            <FaVideo />
+                                                            {item.episodes}
+                                                        </span>
+                                                        <span className="text-xs text-gray-400 flex items-center gap-1 bg-[#2A2A2A] p-0.5 px-1.5 rounded">
+                                                            <ImTv />
+                                                            {item.type}
+                                                        </span>
+                                                        <span className="text-xs text-gray-400 flex items-center line-clamp-1 gap-1 bg-[#2A2A2A] p-0.5 px-1.5 rounded">
+                                                            <FaRegClock />
+                                                            {item.duration}
+                                                        </span>
+                                                    </div>
+                                                    <p className="text-sm text-white line-clamp-3 mt-4 sm:mt-6">{item.synopsis}</p>
+                                                    <div className="flex flex-wrap gap-2 mt-2 sm:mt-4">
+                                                        {item.genres?.map((genre: any) => (
+                                                            <span
+                                                                key={genre.mal_id}
+                                                                className="text-xs text-gray-400 bg-[#2A2A2A] px-2 py-0.5 rounded"
+                                                            >
+                                                                {genre.name}
+                                                            </span>
+                                                        ))}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </motion.div>
                                     ))}
                                 </div>
                             ) : (
