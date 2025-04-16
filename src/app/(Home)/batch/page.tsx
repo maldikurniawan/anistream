@@ -7,6 +7,7 @@ import { useGetData } from "@/actions";
 import Link from "next/link";
 import { FaPlay, FaStar } from "react-icons/fa";
 import { usePathname } from "next/navigation";
+import Banner from "../Banner";
 
 const Batch = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -25,6 +26,7 @@ const Batch = () => {
     return (
         <main>
             <Header />
+            <Banner />
             <div className="min-h-screen bg-[#1F1F1F] text-white pt-[94px] p-4 sm:pt-[130px] sm:px-[60px] sm:pb-8">
                 <div className='overflow-x-auto scroll-hidden flex justify-start mb-4 sm:mb-6'>
                     <div className='flex items-center gap-2'>

@@ -138,6 +138,7 @@ const Header = () => {
                                     )}
                                 </div>
                             </form>
+
                             {/* Search Results */}
                             {query && (
                                 <div className="absolute mt-2 bg-[#1A1A1A] border-2 border-[#333333] p-3 rounded-l-lg shadow-lg w-full max-h-[400px] overflow-y-auto">
@@ -171,6 +172,7 @@ const Header = () => {
                             )}
                         </div>
                     </div>
+
                     <div className="hidden md:flex items-center justify-between border-t-2 border-[#333333] w-full">
                         {/* Left Side - Menu */}
                         <div className="flex items-center gap-x-4">
@@ -203,6 +205,7 @@ const Header = () => {
                         </div>
                     </div>
                 </div>
+
                 <div className="flex gap-2">
                     <button
                         className="block md:hidden text-white py-5 cursor-pointer"
@@ -221,6 +224,7 @@ const Header = () => {
                         <FaBars size={36} className="border-2 border-white/10 p-2 rounded-md" />
                     </button>
                 </div>
+
                 {/* Search Input untuk Mobile */}
                 {searchOpen && (
                     <div className="absolute top-[76px] left-0 right-0 md:hidden">
@@ -246,6 +250,7 @@ const Header = () => {
                                 )}
                             </div>
                         </div>
+
                         {/* Search Results */}
                         {query && (
                             <div className="px-4">
@@ -281,7 +286,6 @@ const Header = () => {
                         )}
                     </div>
                 )}
-
             </header>
 
             {/* Mobile Navigation */}
