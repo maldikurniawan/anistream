@@ -105,7 +105,7 @@ const AnimeDetailPage: React.FC<{ params: Promise<{ slug: string }> }> = ({ para
                     </div>
 
                     {/* Episode Section */}
-                    <div className="w-full lg:w-[30%] max-h-[300px] overflow-auto scroll-hidden mb-4 sm:mb-6">
+                    <div className="w-full lg:w-[30%] max-h-[130px] sm:max-h-[296px] overflow-auto scroll-hidden mb-4 sm:mb-6">
                         <div className="flex flex-wrap gap-2 border-2 border-[#333333] rounded-lg p-2 sm:p-4 bg-[#1A1A1A]">
                             {[...episodeList].reverse().map((episode: any, index: any) => {
                                 const isRecommended = animeDetail?.recommendedEpisodeList?.some(
@@ -126,9 +126,7 @@ const AnimeDetailPage: React.FC<{ params: Promise<{ slug: string }> }> = ({ para
                                 );
                             })}
                         </div>
-
                     </div>
-
                 </div>
 
                 {/* Detail Anime */}
