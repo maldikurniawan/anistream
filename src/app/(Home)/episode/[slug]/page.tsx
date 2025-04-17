@@ -8,7 +8,6 @@ import React, { useEffect, useState } from 'react';
 const AnimeDetailPage: React.FC<{ params: Promise<{ slug: string }> }> = ({ params }) => {
     const [animeData, setAnimeData] = useState<EpisodeResponse | null>(null);
     const [selectedResolution, setSelectedResolution] = useState<string | null>(null);
-    const [selectedServers, setSelectedServers] = useState<any[]>([]);
     const [streamingUrl, setStreamingUrl] = useState<string | null>(null);
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -28,7 +27,6 @@ const AnimeDetailPage: React.FC<{ params: Promise<{ slug: string }> }> = ({ para
     const handleResolutionClick = (resolution: string) => {
         setSelectedResolution(resolution);
         const servers = qualities.find((q: any) => q.title === resolution)?.serverList || [];
-        setSelectedServers(servers);
         setStreamingUrl(null);
 
         // Jika ada server, langsung pilih server pertama
@@ -51,35 +49,44 @@ const AnimeDetailPage: React.FC<{ params: Promise<{ slug: string }> }> = ({ para
         <main className='overflow-x-hidden'>
             <Header />
             <div className="min-h-screen bg-[#1F1F1F] text-white pt-[94px] p-4 sm:pt-[130px] sm:px-[60px] sm:pb-8">
+                <div className='flex flex-col lg:flex-row gap-4 sm:gap-6'>
+                    {/* Video Section */}
+                    <div className='w-full lg:w-[70%]'>
+                        {streamingUrl ? (
+                            <div className="w-full aspect-video border-2 border-[#333333] rounded-lg mb-4 sm:mb-6">
+                                <video src={streamingUrl} controls className="w-full h-full rounded-lg" />
+                            </div>
+                        ) : (
+                            <div className="w-full aspect-video border-2 border-[#333333] rounded-lg mb-4 sm:mb-6">
+                                <iframe
+                                    src={animeDetail?.defaultStreamingUrl}
+                                    allowFullScreen
+                                    className="w-full h-full rounded-lg"
+                                />
+                            </div>
+                        )}
 
-                {streamingUrl ? (
-                    <div className="w-full aspect-video border-2 border-[#333333] rounded-lg mb-4 sm:mb-6">
-                        <video src={streamingUrl} controls className="w-full h-full rounded-lg" />
+                        {/* Pilihan Resolusi */}
+                        <div className="mb-4 sm:mb-6">
+                            <div className="flex gap-2 flex-wrap">
+                                {qualities
+                                    .filter((q: any) => q.serverList?.length > 0)
+                                    .map((q: any) => (
+                                        <button
+                                            key={q.title}
+                                            onClick={() => handleResolutionClick(q.title)}
+                                            className={`px-3 py-1 text-sm rounded-lg border-2 hover:border-[#8C00FF] cursor-pointer ${selectedResolution === q.title ? 'border-[#8C00FF]' : 'border-[#333333]'}`}
+                                        >
+                                            {q.title}
+                                        </button>
+                                    ))}
+                            </div>
+                        </div>
                     </div>
-                ) : (
-                    <div className="w-full aspect-video border-2 border-[#333333] rounded-lg mb-4 sm:mb-6">
-                        <iframe
-                            src={animeDetail?.defaultStreamingUrl}
-                            allowFullScreen
-                            className="w-full h-full rounded-lg"
-                        />
-                    </div>
-                )}
 
-                {/* Pilihan Resolusi */}
-                <div className="mb-4 sm:mb-6">
-                    <div className="flex gap-2 flex-wrap">
-                        {qualities
-                            .filter((q: any) => q.serverList?.length > 0)
-                            .map((q: any) => (
-                                <button
-                                    key={q.title}
-                                    onClick={() => handleResolutionClick(q.title)}
-                                    className={`px-3 py-1 text-sm rounded-lg border-2 hover:border-[#8C00FF] cursor-pointer ${selectedResolution === q.title ? 'border-[#8C00FF]' : 'border-[#333333]'}`}
-                                >
-                                    {q.title}
-                                </button>
-                            ))}
+                    {/* Episode Section */}
+                    <div className='w-full lg:w-[30%]'>
+                        Episode
                     </div>
                 </div>
 
