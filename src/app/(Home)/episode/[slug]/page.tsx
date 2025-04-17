@@ -29,7 +29,7 @@ const AnimeDetailPage: React.FC<{ params: Promise<{ slug: string }> }> = ({ para
         setSelectedResolution(resolution);
         const servers = qualities.find((q: any) => q.title === resolution)?.serverList || [];
         setSelectedServers(servers);
-        setStreamingUrl(null); // reset video
+        setStreamingUrl(null);
     };
 
     const handleServerClick = async (href: string) => {
@@ -47,10 +47,17 @@ const AnimeDetailPage: React.FC<{ params: Promise<{ slug: string }> }> = ({ para
             <Header />
             <div className="min-h-screen bg-[#1F1F1F] text-white pt-[94px] p-4 sm:pt-[130px] sm:px-[60px] sm:pb-8">
 
-                {/* Video */}
-                {streamingUrl && (
+                {streamingUrl ? (
                     <div className="w-full aspect-video mb-6">
                         <video src={streamingUrl} controls className="w-full h-full rounded-lg" />
+                    </div>
+                ) : (
+                    <div className="w-full aspect-video mb-6">
+                        <iframe
+                            src={animeDetail?.defaultStreamingUrl}
+                            allowFullScreen
+                            className="w-full h-full rounded-lg"
+                        />
                     </div>
                 )}
 
