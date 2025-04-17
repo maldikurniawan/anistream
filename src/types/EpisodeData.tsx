@@ -16,6 +16,7 @@ export interface EpisodeData {
     genreList: Genre[];
     server: Server;
     downloadUrl: DownloadUrl;
+    recommendedEpisodeList: RecommendedEpisode[];
 }
 
 export interface EpisodeLink {
@@ -69,4 +70,13 @@ export interface DownloadQuality {
 export interface DownloadUrlEntry {
     title: string;
     url: string;
+}
+
+export interface RecommendedEpisode {
+    title: string;
+    poster: string;
+    releaseDate: string;
+    episodeId: string;
+    href: string;
+    samehadakuUrl: string;
 }

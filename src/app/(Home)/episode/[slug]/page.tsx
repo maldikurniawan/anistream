@@ -3,11 +3,13 @@
 import { Footer, Header } from '@/components';
 import { BASE_URL, SAMEHADA } from '@/constants';
 import { EpisodeResponse } from '@/types/EpisodeData';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 const AnimeDetailPage: React.FC<{ params: Promise<{ slug: string }> }> = ({ params }) => {
     const [animeData, setAnimeData] = useState<EpisodeResponse | null>(null);
     const [selectedResolution, setSelectedResolution] = useState<string | null>(null);
+    const [episodeList, setEpisodeList] = useState<any[]>([]);
     const [streamingUrl, setStreamingUrl] = useState<string | null>(null);
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -45,11 +47,29 @@ const AnimeDetailPage: React.FC<{ params: Promise<{ slug: string }> }> = ({ para
         }
     };
 
+    useEffect(() => {
+        if (animeDetail?.animeId) {
+            const fetchEpisodes = async () => {
+                try {
+                    const res = await fetch(SAMEHADA + "/anime/" + animeDetail.animeId);
+                    const data = await res.json();
+                    setEpisodeList(data?.data?.episodeList || []);
+                } catch (err) {
+                    console.error('Failed to fetch episodes:', err);
+                }
+            };
+
+            fetchEpisodes();
+        }
+    }, [animeDetail?.animeId]);
+
+    // console.log(episodeList)
+
     return (
         <main className='overflow-x-hidden'>
             <Header />
             <div className="min-h-screen bg-[#1F1F1F] text-white pt-[94px] p-4 sm:pt-[130px] sm:px-[60px] sm:pb-8">
-                <div className='flex flex-col lg:flex-row gap-4 sm:gap-6'>
+                <div className='flex flex-col lg:flex-row gap-4 lg:gap-6'>
                     {/* Video Section */}
                     <div className='w-full lg:w-[70%]'>
                         {streamingUrl ? (
@@ -67,7 +87,7 @@ const AnimeDetailPage: React.FC<{ params: Promise<{ slug: string }> }> = ({ para
                         )}
 
                         {/* Pilihan Resolusi */}
-                        <div className="mb-4 sm:mb-6">
+                        <div className="lg:mb-6">
                             <div className="flex gap-2 flex-wrap">
                                 {qualities
                                     .filter((q: any) => q.serverList?.length > 0)
@@ -85,9 +105,30 @@ const AnimeDetailPage: React.FC<{ params: Promise<{ slug: string }> }> = ({ para
                     </div>
 
                     {/* Episode Section */}
-                    <div className='w-full lg:w-[30%]'>
-                        Episode
+                    <div className="w-full lg:w-[30%] mb-4 sm:mb-6 lg:mb-0">
+                        <div className="flex flex-wrap gap-2">
+                            {[...episodeList].reverse().map((episode: any, index: any) => {
+                                const isRecommended = animeDetail?.recommendedEpisodeList?.some(
+                                    (rec: any) => rec.episodeId === episode.episodeId
+                                );
+
+                                return (
+                                    <Link
+                                        key={index}
+                                        href={`/episode/${episode.episodeId}`}
+                                        className={`px-3 py-1 text-sm rounded-lg border-2 ${isRecommended
+                                                ? 'border-[#8C00FF] hover:border-[#8C00FF] cursor-not-allowed'
+                                                : 'border-[#333333] hover:border-[#8C00FF]'
+                                            }`}
+                                    >
+                                        {episode.title}
+                                    </Link>
+                                );
+                            })}
+                        </div>
+
                     </div>
+
                 </div>
 
                 {/* Detail Anime */}
