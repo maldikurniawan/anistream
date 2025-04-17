@@ -58,7 +58,7 @@ const Anime = () => {
                         whileHover={{ y: -10 }}
                     >
                         <Link
-                            href={"/"}
+                            href={`/${anime.animeId}`}
                             className="group overflow-hidden transition-all duration-300"
                         >
                             <div className='relative'>
