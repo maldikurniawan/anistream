@@ -30,6 +30,11 @@ const AnimeDetailPage: React.FC<{ params: Promise<{ slug: string }> }> = ({ para
         const servers = qualities.find((q: any) => q.title === resolution)?.serverList || [];
         setSelectedServers(servers);
         setStreamingUrl(null);
+
+        // Jika ada server, langsung pilih server pertama
+        if (servers.length > 0) {
+            handleServerClick(servers[0].href);
+        }
     };
 
     const handleServerClick = async (href: string) => {
@@ -48,11 +53,11 @@ const AnimeDetailPage: React.FC<{ params: Promise<{ slug: string }> }> = ({ para
             <div className="min-h-screen bg-[#1F1F1F] text-white pt-[94px] p-4 sm:pt-[130px] sm:px-[60px] sm:pb-8">
 
                 {streamingUrl ? (
-                    <div className="w-full aspect-video mb-6">
+                    <div className="w-full aspect-video border-2 border-[#333333] rounded-lg mb-4 sm:mb-6">
                         <video src={streamingUrl} controls className="w-full h-full rounded-lg" />
                     </div>
                 ) : (
-                    <div className="w-full aspect-video mb-6">
+                    <div className="w-full aspect-video border-2 border-[#333333] rounded-lg mb-4 sm:mb-6">
                         <iframe
                             src={animeDetail?.defaultStreamingUrl}
                             allowFullScreen
@@ -62,8 +67,7 @@ const AnimeDetailPage: React.FC<{ params: Promise<{ slug: string }> }> = ({ para
                 )}
 
                 {/* Pilihan Resolusi */}
-                <div className="mb-4">
-                    <h4 className="mb-2 text-sm">Pilih Resolusi:</h4>
+                <div className="mb-4 sm:mb-6">
                     <div className="flex gap-2 flex-wrap">
                         {qualities
                             .filter((q: any) => q.serverList?.length > 0)
@@ -71,31 +75,13 @@ const AnimeDetailPage: React.FC<{ params: Promise<{ slug: string }> }> = ({ para
                                 <button
                                     key={q.title}
                                     onClick={() => handleResolutionClick(q.title)}
-                                    className={`px-3 py-1 text-sm rounded-lg ${selectedResolution === q.title ? 'bg-blue-600' : 'bg-gray-700'}`}
+                                    className={`px-3 py-1 text-sm rounded-lg border-2 hover:border-[#8C00FF] cursor-pointer ${selectedResolution === q.title ? 'border-[#8C00FF]' : 'border-[#333333]'}`}
                                 >
                                     {q.title}
                                 </button>
                             ))}
                     </div>
                 </div>
-
-                {/* Pilihan Server */}
-                {selectedServers.length > 0 && (
-                    <div className="mb-4">
-                        <h4 className="mb-2 text-sm">Pilih Server:</h4>
-                        <div className="flex gap-2 flex-wrap">
-                            {selectedServers.map((server: any) => (
-                                <button
-                                    key={server.serverId}
-                                    onClick={() => handleServerClick(server.href)}
-                                    className="px-3 py-1 text-sm bg-gray-600 rounded-lg"
-                                >
-                                    {server.title}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-                )}
 
                 {/* Detail Anime */}
                 <div className="bg-[#1A1A1A] p-4 rounded-lg border-2 border-[#333333] flex gap-4">
